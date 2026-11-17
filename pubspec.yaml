@@ -1,0 +1,25 @@
+name: template_kuis
+description: "Template kuis Praktikum Mobile: API + Login (Hive) + Session (SharedPreferences) + Profil + Favorit + Keranjang per akun."
+publish_to: 'none'
+version: 1.0.0+1
+
+environment:
+  sdk: ^3.5.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  cupertino_icons: ^1.0.8
+  get: ^4.7.3                 # state management + routing
+  http: ^1.6.0                # HTTP request ke API
+  shared_preferences: ^2.5.3  # session login + favorit
+  hive: ^2.2.3                # local database (akun + keranjang)
+  hive_flutter: ^1.1.0
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  flutter_lints: ^6.0.0
+
+flutter:
+  uses-material-design: true
