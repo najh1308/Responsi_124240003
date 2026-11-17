@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 class LoadingView extends StatelessWidget {
   const LoadingView({super.key});
+
   @override
   Widget build(BuildContext context) =>
       const Center(child: CircularProgressIndicator());
@@ -9,8 +10,9 @@ class LoadingView extends StatelessWidget {
 
 class ErrorView extends StatelessWidget {
   const ErrorView({super.key, required this.message, required this.onRetry});
+
   final String message;
-  final VoidCallback onRetry; // fungsi yang dipanggil saat tombol ditekan
+  final VoidCallback onRetry;
 
   @override
   Widget build(BuildContext context) {
@@ -39,8 +41,13 @@ class ErrorView extends StatelessWidget {
 }
 
 class EmptyView extends StatelessWidget {
-  const EmptyView(
-      {super.key, required this.icon, required this.title, this.subtitle});
+  const EmptyView({
+    super.key,
+    required this.icon,
+    required this.title,
+    this.subtitle,
+  });
+
   final IconData icon;
   final String title;
   final String? subtitle;

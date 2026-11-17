@@ -2,12 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import '../controller/auth_controller.dart';
 import '../controller/detail_controller.dart';
-import '../controller/favorite_controller.dart';
 import '../controller/item_controller.dart';
-import '../controller/main_controller.dart';
+import '../controller/wishlist_controller.dart';
 import '../view/pages/detail_page.dart';
+import '../view/pages/home_page.dart';
 import '../view/pages/login_page.dart';
-import '../view/pages/main_page.dart';
+import '../view/pages/wishlist_page.dart';
 import 'app_routes.dart';
 
 class AuthMiddleware extends GetMiddleware {
@@ -18,12 +18,10 @@ class AuthMiddleware extends GetMiddleware {
   }
 }
 
-class MainBinding extends Bindings {
+class HomeBinding extends Bindings {
   @override
   void dependencies() {
-    Get.find<FavoriteController>().load();
-
-    Get.lazyPut<MainController>(() => MainController());
+    Get.find<WishlistController>().load();
     Get.lazyPut<ItemController>(() => ItemController());
   }
 }
@@ -39,10 +37,15 @@ class AppPages {
   static final routes = [
     GetPage(name: AppRoutes.login, page: () => const LoginPage()),
     GetPage(
-      name: AppRoutes.main,
-      page: () => MainPage(),
-      binding: MainBinding(),
-      middlewares: [AuthMiddleware()], // halaman terlindungi
+      name: AppRoutes.home,
+      page: () => HomePage(),
+      binding: HomeBinding(),
+      middlewares: [AuthMiddleware()],
+    ),
+    GetPage(
+      name: AppRoutes.wishlist,
+      page: () => WishlistPage(),
+      middlewares: [AuthMiddleware()],
     ),
     GetPage(
       name: AppRoutes.detail,

@@ -5,17 +5,16 @@ import '../service/api_service.dart';
 class DetailController extends GetxController {
   final ApiService _api = ApiService();
 
-  // Get.arguments = data kiriman dari Get.toNamed(..., arguments: item)
   final Item selected = Get.arguments as Item;
 
-  final Rxn<Item> item = Rxn<Item>(); // null sampai data tiba
+  final Rxn<Item> item = Rxn<Item>();
   final RxBool isLoading = true.obs;
   final RxnString errorMessage = RxnString();
 
   @override
   void onInit() {
     super.onInit();
-    fetch(); // otomatis ambil data saat halaman dibuka (setara initState)
+    fetch();
   }
 
   Future<void> fetch() async {

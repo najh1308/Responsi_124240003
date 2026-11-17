@@ -4,12 +4,11 @@ import '../model/user.dart';
 
 class LocalDb {
   static Future<void> init() async {
-
     await Hive.initFlutter();
-
     Hive.registerAdapter(UserAdapter());
 
     final users = await Hive.openBox<User>(AppConfig.usersBox);
+    await Hive.openBox<String>(AppConfig.wishlistBox);
 
     final key = AppConfig.defaultUsername.toLowerCase();
     if (!users.containsKey(key)) {
@@ -18,7 +17,6 @@ class LocalDb {
         User(
           username: AppConfig.defaultUsername,
           password: AppConfig.defaultPassword,
-          fullName: AppConfig.defaultFullName,
         ),
       );
     }

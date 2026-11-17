@@ -8,30 +8,26 @@ class ItemController extends GetxController {
 
   final RxList<Item> items = <Item>[].obs;
   final RxList<String> categories = <String>[].obs;
-  final RxBool isLoading = false.obs; // loading layar penuh (halaman pertama)
-  final RxBool isLoadingMore = false.obs; // loading kecil di bawah list
+  final RxBool isLoading = false.obs;
+  final RxBool isLoadingMore = false.obs;
   final RxBool moreError = false.obs;
-  final RxnString errorMessage = RxnString(); // null = tidak ada error
-  final RxString selectedCategory = ''.obs; // '' = semua
+  final RxnString errorMessage = RxnString();
+  final RxString selectedCategory = ''.obs;
   final RxString searchQuery = ''.obs;
 
   final ScrollController scrollController = ScrollController();
   final TextEditingController searchController = TextEditingController();
 
-  int _skip = 0; // berapa data yang sudah diambil
-  bool hasNext = true; // masih ada halaman lagi?
-  int _requestId = 0; // penanda request terbaru (cegah response basi menimpa)
+  int _skip = 0;
+  bool hasNext = true;
+  int _requestId = 0;
 
   @override
   void onInit() {
     super.onInit();
     scrollController.addListener(_onScroll);
-
-    // debounce: tunggu 500 ms setelah user BERHENTI mengetik baru request,
-    // supaya tidak kirim request di setiap huruf
     debounce(searchQuery, (_) => fetchInitial(),
         time: const Duration(milliseconds: 500));
-
     fetchCategories();
     fetchInitial();
   }
@@ -43,7 +39,6 @@ class ItemController extends GetxController {
     super.onClose();
   }
 
-  // Dipanggil setiap scroll: jika tinggal 300px dari dasar, muat halaman berikut
   void _onScroll() {
     if (!scrollController.hasClients) return;
     final pos = scrollController.position;
@@ -51,7 +46,6 @@ class ItemController extends GetxController {
   }
 
   void onSearchChanged(String v) {
-    // Endpoint search tidak bisa digabung kategori -> reset kategori
     if (v.isNotEmpty) selectedCategory.value = '';
     searchQuery.value = v.trim();
   }
@@ -88,7 +82,7 @@ class ItemController extends GetxController {
         category: selectedCategory.value,
         query: searchQuery.value,
       );
-      if (id != _requestId) return true; // ada request yang lebih baru, abaikan
+      if (id != _requestId) return true;
       items.assignAll(r.items);
       _skip = r.items.length;
       hasNext = r.hasNext;
@@ -106,7 +100,6 @@ class ItemController extends GetxController {
     }
   }
 
-  // ---- INFINITE SCROLL: halaman berikutnya ----------------------------------
   Future<void> loadMore() async {
     if (isLoading.value || isLoadingMore.value || !hasNext) return;
     final id = _requestId;
@@ -120,7 +113,7 @@ class ItemController extends GetxController {
         query: searchQuery.value,
       );
       if (id != _requestId) return;
-      items.addAll(r.items); // addAll = tambah ke belakang, bukan ganti
+      items.addAll(r.items);
       _skip += r.items.length;
       hasNext = r.hasNext;
     } catch (_) {

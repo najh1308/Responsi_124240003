@@ -6,7 +6,4 @@ class AuthService {
   Box<User> get _box => Hive.box<User>(AppConfig.usersBox);
 
   User? find(String username) => _box.get(username.toLowerCase());
-
-  bool exists(String username) => _box.containsKey(username.toLowerCase());
-
 }

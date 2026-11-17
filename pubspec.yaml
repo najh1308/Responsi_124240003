@@ -1,5 +1,5 @@
 name: template_kuis
-description: "Template kuis Praktikum Mobile: API + Login (Hive) + Session (SharedPreferences) + Profil + Favorit + Keranjang per akun."
+description: "ShoppingHub - responsi Praktikum Pemrograman Mobile."
 publish_to: 'none'
 version: 1.0.0+1
 
@@ -10,10 +10,10 @@ dependencies:
   flutter:
     sdk: flutter
   cupertino_icons: ^1.0.8
-  get: ^4.7.3                 # state management + routing
-  http: ^1.6.0                # HTTP request ke API
-  shared_preferences: ^2.5.3  # session login + favorit
-  hive: ^2.2.3                # local database (akun + keranjang)
+  get: ^4.7.3
+  http: ^1.6.0
+  shared_preferences: ^2.5.6
+  hive: ^2.2.3
   hive_flutter: ^1.1.0
 
 dev_dependencies:
